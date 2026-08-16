@@ -13,6 +13,7 @@ Personal portfolio for Jeremy Foss, a University of South Florida Information Sc
 - Accessible keyboard navigation and reduced-motion support
 - Open Graph, structured-data, sitemap, and search metadata
 - A custom favicon and social sharing image
+- An original responsive 2D canvas game with keyboard and touch controls
 
 ## Project structure
 
@@ -25,9 +26,12 @@ Personal portfolio for Jeremy Foss, a University of South Florida Information Sc
 │   ├── crypto-fraud-osint.html
 │   ├── portfolio-database.html
 │   └── office-network.html
+├── lab/
+│   └── signal-sweep.html
 ├── assets/
-│   ├── css/project.css
-│   └── images/
+│   ├── css/
+│   ├── images/
+│   └── js/
 ├── robots.txt
 └── sitemap.xml
 ```

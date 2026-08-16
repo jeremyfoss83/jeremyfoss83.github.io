@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Play Signal Sweep, a responsive 2D canvas network-defense game built by Jeremy Foss with vanilla JavaScript.">
+  <meta name="theme-color" content="#07101c">
+  <meta property="og:title" content="Signal Sweep | Jeremy Foss">
+  <meta property="og:description" content="Collect clean packets, avoid corrupted signals, and keep the network alive for 60 seconds.">
+  <meta property="og:image" content="https://jeremyfoss83.github.io/assets/images/social-preview.png">
+  <title>Signal Sweep | Jeremy Foss</title>
+  <link rel="canonical" href="https://jeremyfoss83.github.io/lab/signal-sweep.html">
+  <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/game.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to game</a>
+  <nav><div class="wrap nav"><a class="brand" href="../index.html"><span>JF /</span> INTERACTIVE LAB</a><a class="back" href="../index.html#lab">← PORTFOLIO</a></div></nav>
+  <main id="main">
+    <header class="wrap hero"><div class="eyebrow">2D Canvas Experiment · 60-Second Challenge</div><h1>Signal Sweep</h1><p class="lead">Collect clean data packets, avoid corrupted signals, and maintain network integrity as the system accelerates.</p></header>
+    <section class="wrap game-layout" aria-label="Signal Sweep game and instructions">
+      <div class="play-card">
+        <div class="hud" aria-label="Current game statistics">
+          <div><span>Score</span><strong id="scoreValue">000</strong></div>
+          <div><span>Integrity</span><strong id="integrityValue">100%</strong></div>
+          <div><span>Time</span><strong id="timeValue">60.0</strong></div>
+          <div><span>Level</span><strong id="levelValue">01</strong></div>
+          <div><span>Best</span><strong id="bestValue">000</strong></div>
+        </div>
+        <div class="canvas-frame" id="canvasFrame">
+          <canvas id="gameCanvas" width="960" height="540" aria-label="Signal Sweep play field. Move with arrow keys or WASD, collect cyan packet circles, and avoid red corrupted-signal diamonds."></canvas>
+          <div class="overlay" id="gameOverlay">
+            <div class="overlay-mark" aria-hidden="true">◇</div>
+            <p class="overlay-label">Network state / standby</p>
+            <h2 id="overlayTitle">Route the signal.</h2>
+            <p id="overlayCopy">Survive for 60 seconds. Clean packets increase your score; corrupted signals reduce system integrity.</p>
+            <button id="startButton" type="button">Initialize run</button>
+          </div>
+        </div>
+        <div class="touch-controls" aria-label="Touch controls">
+          <button type="button" data-control="up" aria-label="Move up">↑</button>
+          <button type="button" data-control="left" aria-label="Move left">←</button>
+          <button type="button" data-control="down" aria-label="Move down">↓</button>
+          <button type="button" data-control="right" aria-label="Move right">→</button>
+        </div>
+        <div class="game-bar"><p id="statusText" aria-live="polite">System ready.</p><div><button class="text-button" id="pauseButton" type="button">Pause</button><button class="text-button" id="restartButton" type="button">Restart</button></div></div>
+      </div>
+      <aside class="instructions">
+        <div class="instruction-block"><div class="aside-label">Mission</div><h2>Keep the network alive.</h2><p>Guide the routing cursor through the field. Collect cyan packets for points and avoid red corruption nodes. Every 100 points increases the system level and threat speed.</p></div>
+        <div class="instruction-block"><div class="aside-label">Controls</div><dl><div><dt>Move</dt><dd>Arrow keys / WASD</dd></div><div><dt>Pause</dt><dd>Space</dd></div><div><dt>Restart</dt><dd>R</dd></div></dl></div>
+        <div class="instruction-block"><div class="aside-label">What it demonstrates</div><ul><li>Canvas rendering and animation loops</li><li>Real-time keyboard and touch input</li><li>Collision detection and game state</li><li>Responsive scaling and local high scores</li></ul></div>
+      </aside>
+    </section>
+    <section class="wrap build-note"><div class="eyebrow">Implementation note</div><h2>Small surface. Real interaction logic.</h2><p>Signal Sweep is intentionally compact: semantic HTML provides the surrounding interface, CSS controls the responsive system, and a dependency-free JavaScript loop handles rendering, input, collisions, difficulty, particles, and persistence.</p></section>
+  </main>
+  <footer><div class="wrap foot"><span>© 2026 Jeremy Foss</span><span>Canvas · CSS · Vanilla JavaScript · AI-assisted</span></div></footer>
+  <script src="../assets/js/signal-sweep.js"></script>
+</body>
+</html>
