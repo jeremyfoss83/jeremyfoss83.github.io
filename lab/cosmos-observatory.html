@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Jeremy Foss's interactive 3D astronomy observatory: explore JPL Solar System states, a TRAPPIST-1 catalog model, orbital geometry, and model comparisons.">
+  <meta name="theme-color" content="#030711">
+  <meta property="og:title" content="COSMOS Observatory | Jeremy Foss">
+  <meta property="og:description" content="An interactive scientific visualization combining JPL reference data, local orbital propagation, 3D rendering, and accessible controls.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://jeremyfoss83.github.io/lab/cosmos-observatory.html">
+  <meta property="og:image" content="https://jeremyfoss83.github.io/assets/images/social-preview.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>COSMOS Observatory | Jeremy Foss</title>
+  <link rel="canonical" href="https://jeremyfoss83.github.io/lab/cosmos-observatory.html">
+  <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/observatory.css">
+</head>
+<body>
+  <a class="skip" href="#observatoryViewport">Skip to observatory</a>
+
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a class="brand" href="../index.html#cosmos"><span>JF /</span> COSMOS</a>
+      <div class="nav-title"><i aria-hidden="true"></i><span>Deep-Space Observatory</span><em>Reference instrument 01</em></div>
+      <div class="nav-actions">
+        <a class="sandbox-link" href="cosmos-lab.html"><span>∞</span> Open 2D sandbox</a>
+        <a class="back-link" href="../index.html#cosmos">Portfolio ↗</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="observatory" aria-labelledby="observatory-title">
+      <div class="viewport" id="observatoryViewport">
+        <canvas id="observatoryCanvas" width="1920" height="1080" tabindex="0" role="img" aria-describedby="obsDomSummary" aria-keyshortcuts="Space ArrowLeft ArrowRight F O L V T C G BracketLeft BracketRight">Interactive three-dimensional planetary-system view. Drag to orbit the camera, scroll or pinch to zoom, and select a body to inspect its state.</canvas>
+        <div class="space-vignette" aria-hidden="true"></div>
+        <div class="reticle" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+
+        <header class="stage-header">
+          <div class="stage-title">
+            <div class="eyebrow">JPL reference states · Local propagation · 3D WebGL</div>
+            <h1 id="observatory-title">The solar system,<br><span>held in motion.</span></h1>
+            <p>Explore the unknown through a model you can question: move through three dimensions, compare reference and propagated states, and make the structure of an orbit visible.</p>
+          </div>
+          <div class="readout-grid" aria-label="Observatory status">
+            <div><span>Instrument</span><strong id="obsStatus" aria-live="polite">INITIALIZING</strong></div>
+            <div><span>Model date</span><strong id="obsDate">—</strong></div>
+            <div><span>Epoch</span><strong id="obsEpoch">2026-01-01</strong></div>
+            <div><span>Reference frame</span><strong id="obsFrame">ICRF / ECLIPTIC</strong></div>
+            <div><span>Display scale</span><strong id="obsScaleMode">COMPRESSED</strong></div>
+            <div><span>Render</span><strong id="obsFps">— FPS</strong></div>
+          </div>
+        </header>
+
+        <aside class="body-browser glass-panel" aria-labelledby="catalog-title">
+          <div class="panel-head"><span>Object catalog</span><b aria-hidden="true">09</b></div>
+          <label class="system-select" for="obsSystemSelect"><span id="catalog-title">System</span><select id="obsSystemSelect"><option value="solar-system">Solar System / JPL 2026–2031</option><option value="trappist-1">TRAPPIST-1 / catalog model</option></select></label>
+          <div class="dataset-key" aria-label="Dataset classifications"><span class="reference-badge">Ephemeris reference</span><span class="idealized-badge">Idealized catalog</span></div>
+          <ol id="obsBodyList" aria-label="Selectable celestial bodies"><li class="loading"><i></i>Loading reference catalog…</li></ol>
+        </aside>
+
+        <aside class="inspector glass-panel" aria-labelledby="inspector-heading">
+          <div class="panel-head"><span id="inspector-heading">Selected body</span><b>LIVE</b></div>
+          <div class="selected-identity"><i aria-hidden="true"></i><div><span id="obsSelectedType">CENTRAL STAR</span><h2 id="obsSelectedName">Sun</h2></div></div>
+          <dl>
+            <div><dt>Distance from star</dt><dd id="obsSelectedDistance">—</dd></div>
+            <div><dt>Instantaneous velocity</dt><dd id="obsSelectedVelocity">—</dd></div>
+            <div><dt>Model residual</dt><dd id="obsSelectedResidual">—</dd></div>
+            <div><dt>Reference source</dt><dd id="obsSelectedSource">JPL Horizons</dd></div>
+          </dl>
+          <p class="inspector-note">Display values are rounded. Select a body or use the guided tour to change focus.</p>
+        </aside>
+
+        <div class="legend glass-panel" id="obsLegend" aria-label="Visualization legend">
+          <span><i class="reference"></i>Reference state</span>
+          <span><i class="propagated"></i>Local model</span>
+          <span><i class="residual"></i>Residual</span>
+        </div>
+
+        <div class="camera-hint" aria-hidden="true"><i></i><span>Drag: orbit · Shift + drag: pan · Wheel / pinch: travel · [ / ]: select · Space: play/pause</span></div>
+
+        <section class="command-console" aria-label="Observatory controls">
+          <div class="timeline">
+            <div class="timeline-label"><span>Dataset timeline</span><strong id="timelineDate">JPL samples / 10-day cadence</strong></div>
+            <input id="obsDateSlider" type="range" min="0" max="1000" value="0" step="1" aria-label="Position within the available dataset timeline">
+            <div class="timeline-bounds" aria-hidden="true"><span>2026-01-01</span><i>REFERENCE WINDOW</i><span>2030-12-26</span></div>
+          </div>
+
+          <div class="control-row">
+            <fieldset class="transport">
+              <legend>Time transport</legend>
+              <button type="button" data-obs-action="reverse" title="Reverse time" aria-label="Reverse time">↶</button>
+              <button type="button" data-obs-action="slower" title="Slow down" aria-label="Decrease time speed">−</button>
+              <button class="play-button" type="button" data-obs-action="play" aria-pressed="false"><span aria-hidden="true">▶</span><span data-obs-play-label>Play</span></button>
+              <button type="button" data-obs-action="faster" title="Speed up" aria-label="Increase time speed">+</button>
+              <button type="button" data-obs-action="step" title="Advance one day" aria-label="Advance one day">+1D</button>
+              <button class="text-control" type="button" data-obs-action="reset-time">Return to today</button>
+            </fieldset>
+
+            <fieldset class="layer-controls">
+              <legend>Instrument layers</legend>
+              <label><input id="obsOrbitsToggle" type="checkbox" checked><i></i><span>Orbits</span></label>
+              <label><input id="obsLabelsToggle" type="checkbox" checked><i></i><span>Labels</span></label>
+              <label><input id="obsVectorsToggle" type="checkbox"><i></i><span>Vectors</span></label>
+              <label><input id="obsTrailsToggle" type="checkbox"><i></i><span>Trails</span></label>
+              <label><input id="obsFabricToggle" type="checkbox"><i></i><span>Gravity fabric</span></label>
+              <label><input id="obsCompareToggle" type="checkbox"><i></i><span>Compare models</span></label>
+              <label><input id="obsScaleToggle" type="checkbox"><i></i><span>Relative body radii</span></label>
+            </fieldset>
+
+            <fieldset class="view-controls">
+              <legend>View & experience</legend>
+              <button class="tour-button" type="button" data-obs-action="guided-tour"><span>◇</span> Guided tour</button>
+              <button type="button" data-obs-action="reset-camera">Reset camera</button>
+              <button type="button" data-obs-action="audio" aria-pressed="false" title="Toggle artistic, distance-mapped sonification">Sonification off</button>
+              <button type="button" data-obs-action="fullscreen">Fullscreen</button>
+            </fieldset>
+          </div>
+        </section>
+
+        <div class="fallback glass-panel" id="obsFallback" role="status" aria-live="polite">
+          <i aria-hidden="true"></i><span>Preparing orbital state and graphics context…</span><a href="cosmos-lab.html">Open the 2D Sandbox instead</a>
+        </div>
+
+        <section class="tour-overlay" id="obsTour" role="dialog" aria-modal="true" aria-labelledby="obsTourTitle" aria-describedby="obsTourCopy" tabindex="-1" hidden>
+          <div class="tour-card">
+            <div class="tour-progress" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="tour-kicker" id="obsTourKicker">01 / Orientation</div>
+            <h2 id="obsTourTitle">A system in perspective.</h2>
+            <p id="obsTourCopy">Begin at the ecliptic plane, then travel outward to see how distance, inclination, and time shape the architecture of the solar system.</p>
+            <div class="tour-actions"><button type="button" data-tour-action="previous">← Previous</button><button class="tour-next" type="button" data-tour-action="next">Continue →</button><button class="tour-exit" type="button" data-tour-action="exit">Exit tour</button></div>
+          </div>
+        </section>
+      </div>
+
+      <p class="sr-only" id="obsDomSummary" aria-live="polite">Observatory loading. The default visualization uses JPL barycentric samples beginning 2026-01-01 TDB in the ICRF ecliptic frame. Use the body catalog or left and right bracket keys to select an object, the timeline to change date, and Space while the canvas is focused to play or pause.</p>
+    </section>
+
+    <section class="thesis">
+      <div class="content-wrap thesis-grid">
+        <div><div class="eyebrow">Why build an observatory?</div><h2>Wonder becomes more powerful when the model stays honest.</h2></div>
+        <div><p class="thesis-lead">I am drawn to space because it lets us explore the unknown, discover new truths about the universe, and ask what our existence within it means.</p><p>This instrument turns that curiosity into an inspectable system: a visual experience backed by documented inputs, visible assumptions, and a direct comparison between reference data and a deliberately simpler browser model.</p><a class="sandbox-cta" href="cosmos-lab.html"><span>∞</span><strong>Enter the 2D orbital sandbox</strong><small>Create bodies, expose force vectors, and experiment freely →</small></a></div>
+      </div>
+    </section>
+
+    <section class="methodology content-wrap" aria-labelledby="methodology-title">
+      <header class="methodology-head"><div class="eyebrow">Methodology / Provenance</div><h2 id="methodology-title">What the instrument shows—and what it does not.</h2><p>COSMOS Observatory is an educational visualization and front-end engineering project. It is not an operational ephemeris, navigation system, aerospace analysis package, or substitute for JPL tools.</p></header>
+
+      <div class="method-grid">
+        <article><span class="method-number">01</span><h3>JPL reference states</h3><p>The local dataset records selected barycentric planetary states tied to a documented time scale and frame. The renderer linearly interpolates between immutable 10-day samples for visual continuity; those between-sample states are not fresh Horizons results or a live feed.</p><a href="https://ssd.jpl.nasa.gov/horizons/manual.html" target="_blank" rel="noreferrer">Horizons system manual ↗</a></article>
+        <article><span class="method-number">02</span><h3>Local propagation & comparison</h3><p>The browser independently advances a simplified two-body/Keplerian model. Compare mode plots the local result beside its reference state and reports a residual. Divergence is expected: the local model omits many-body perturbations and other terms present in high-precision ephemerides.</p><a href="https://ssd.jpl.nasa.gov/planets/approx_pos.html" target="_blank" rel="noreferrer">JPL approximate positions & formulae ↗</a></article>
+        <article><span class="method-number">03</span><h3>Scale compromises</h3><p>No single screen can show planetary radii and interplanetary distances at the same legible physical scale. Both modes preserve relative orbital spacing. The default exaggerates body radii; “Relative body radii” uses the physical radius-to-distance relationship with a small selectable-symbol floor.</p><div class="equation"><span>Mean anomaly</span><strong>M(t) = M₀ + n(t − t₀)</strong></div></article>
+        <article><span class="method-number">04</span><h3>Three-dimensional rendering</h3><p>State vectors are transformed into camera space, projected with depth, and rendered with orbit planes, restrained atmospheric cues, and a chunked procedural starfield. Visual lighting communicates form; it does not simulate radiometry.</p><div class="equation"><span>State residual</span><strong>Δr = ‖r<sub>model</sub> − r<sub>ref</sub>‖</strong></div></article>
+        <article><span class="method-number">05</span><h3>Interaction & accessibility</h3><p>Every persistent layer has an HTML control. The canvas is keyboard-focusable, major state changes update a live DOM summary, color is reinforced with shape and text, and reduced-motion settings suppress cinematic transitions. The guided tour can be exited at any time.</p></article>
+        <article><span class="method-number">06</span><h3>Reproducibility & limits</h3><p>Reference values ship with the site so the visualization does not depend on network availability. Values are rounded for display. Epoch, reference frame, scale mode, and source remain visible so a compelling scene never obscures the model’s boundaries.</p><a href="https://ssd.jpl.nasa.gov/planets/phys_par.html" target="_blank" rel="noreferrer">JPL planetary physical parameters ↗</a></article>
+      </div>
+
+      <div class="pipeline" aria-label="Visualization data pipeline">
+        <div><span>01</span><i aria-hidden="true">◎</i><strong>Source</strong><small>JPL Horizons / NASA Exoplanet Archive</small></div><b aria-hidden="true">→</b>
+        <div><span>02</span><i aria-hidden="true">◇</i><strong>Normalize</strong><small>Units, epoch, frame, metadata</small></div><b aria-hidden="true">→</b>
+        <div><span>03</span><i aria-hidden="true">Δ</i><strong>Compare</strong><small>Reference state vs local propagation</small></div><b aria-hidden="true">→</b>
+        <div><span>04</span><i aria-hidden="true">◉</i><strong>Render</strong><small>Camera, depth, layers, DOM state</small></div>
+      </div>
+
+      <aside class="sources" aria-labelledby="sources-title">
+        <div><span>Sources / project evidence</span><h3 id="sources-title">Data provenance & implementation</h3></div>
+        <ul>
+          <li><a href="https://ssd.jpl.nasa.gov/horizons/" target="_blank" rel="noreferrer"><strong>Horizons System</strong><span>ssd.jpl.nasa.gov/horizons/</span></a></li>
+          <li><a href="https://ssd.jpl.nasa.gov/horizons/tutorial.html" target="_blank" rel="noreferrer"><strong>Horizons Tutorial</strong><span>ssd.jpl.nasa.gov/horizons/tutorial.html</span></a></li>
+          <li><a href="https://ssd.jpl.nasa.gov/planets/approx_pos.html" target="_blank" rel="noreferrer"><strong>Approximate Positions of the Planets</strong><span>ssd.jpl.nasa.gov/planets/approx_pos.html</span></a></li>
+          <li><a href="https://ssd.jpl.nasa.gov/planets/orbits.html" target="_blank" rel="noreferrer"><strong>Planetary Orbits & Ephemerides</strong><span>ssd.jpl.nasa.gov/planets/orbits.html</span></a></li>
+          <li><a href="https://exoplanetarchive.ipac.caltech.edu/overview/TRAPPIST-1%20e" target="_blank" rel="noreferrer"><strong>NASA Exoplanet Archive: TRAPPIST-1</strong><span>exoplanetarchive.ipac.caltech.edu</span></a></li>
+          <li><a href="https://github.com/jeremyfoss83/jeremyfoss83.github.io/blob/main/docs/COSMOS-OBSERVATORY-ARCHITECTURE.md" target="_blank" rel="noreferrer"><strong>Source code & architecture</strong><span>github.com/jeremyfoss83</span></a></li>
+        </ul>
+      </aside>
+    </section>
+  </main>
+
+  <footer><div class="content-wrap footer-inner"><span>© 2026 Jeremy Foss</span><span>JPL-sourced reference data · Local model · Canvas/WebGL · AI-assisted</span></div></footer>
+  <noscript><p class="noscript">COSMOS Observatory requires JavaScript for the interactive model. You can still <a href="../docs/COSMOS-OBSERVATORY-ARCHITECTURE.md">read the architecture and methodology</a> or <a href="../index.html#cosmos">return to the portfolio</a>.</p></noscript>
+  <script src="../assets/data/cosmos-real-data.js"></script>
+  <script src="../assets/js/cosmos-observatory.js"></script>
+</body>
+</html>
