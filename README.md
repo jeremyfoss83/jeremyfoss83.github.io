@@ -15,6 +15,7 @@ Personal portfolio for Jeremy Foss, a University of South Florida Information Sc
 - A custom favicon and social sharing image
 - An original responsive 2D canvas game with keyboard and touch controls
 - COSMOS LAB: a procedural starfield and interactive orbital-physics visualization
+- COSMOS OBSERVATORY: a progressively enhanced 3D astronomy data experience using curated JPL Horizons and NASA Exoplanet Archive reference data
 
 ## Project structure
 
@@ -29,17 +30,35 @@ Personal portfolio for Jeremy Foss, a University of South Florida Information Sc
 │   └── office-network.html
 ├── lab/
 │   ├── signal-sweep.html
-│   └── cosmos-lab.html
+│   ├── cosmos-lab.html
+│   └── cosmos-observatory.html
 ├── assets/
 │   ├── css/
+│   ├── data/
 │   ├── images/
 │   └── js/
+├── docs/
+│   └── COSMOS-OBSERVATORY-ARCHITECTURE.md
+├── tools/
+│   └── fetch-cosmos-data.mjs
+├── qa.mjs
+├── package.json
+├── package-lock.json
 ├── robots.txt
 └── sitemap.xml
 ```
 
 ## Development notes
 
-The site uses semantic HTML and CSS with minimal JavaScript and no build system. It can be opened locally or served directly through GitHub Pages.
+Most of the site uses semantic HTML, CSS, and dependency-free JavaScript. The optional 3D observatory is bundled from a documented ES module source with pinned Three.js and esbuild versions; the committed browser bundle still deploys directly through GitHub Pages.
+
+```powershell
+npm install
+npx playwright install chromium
+npm run build:observatory
+npm run qa
+```
+
+The astronomy dataset is a versioned local snapshot so the experience remains deterministic and reviewable. Its provenance, retrieval queries, units, reference frame, missing values, and modeling boundaries are documented under `assets/data/`.
 
 The implementation and copy were developed with AI assistance under Jeremy's direction. Project claims were reconciled against a verified career evidence bank and intentionally preserve stated evidence boundaries.

@@ -15,5 +15,6 @@ footer{border-top:1px solid var(--line);padding:1.5rem 0;color:var(--faint);font
 .keyboard-help{padding-left:.65rem;border-left:1px solid rgba(132,170,207,.2)}
 .layers input:focus+i{outline:2px solid var(--cyan);outline-offset:3px}
 .object-nav{margin-left:auto;display:flex;gap:.35rem}.object-nav button{width:38px;height:38px;border:1px solid var(--line);border-radius:5px;background:#081421;color:var(--cyan);cursor:pointer}.object-nav button:hover{border-color:var(--line-hi);background:#0e2032}
+.observatory-link{display:inline-flex;align-items:center;gap:.55rem;margin-top:1rem;color:var(--cyan);font:500 .67rem var(--mono);letter-spacing:.06em;text-transform:uppercase;text-decoration:none}.observatory-link:hover{text-decoration:underline;text-underline-offset:4px}
 @media(max-width:560px){.keyboard-help{display:none}.button-row button{padding-inline:.55rem}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
