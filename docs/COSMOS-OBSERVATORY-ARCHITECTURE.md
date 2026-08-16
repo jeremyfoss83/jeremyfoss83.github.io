@@ -8,7 +8,7 @@ COSMOS OBSERVATORY is a browser-based astronomy data visualization, not a flight
 2. **Local model** — simplified propagation used to explain divergence and numerical assumptions.
 3. **Artistic rendering** — exaggerated radii, light, trails, and scale transitions used for legibility.
 
-The original COSMOS LAB remains the dependency-free two-dimensional sandbox and accessible fallback.
+The companion COSMOS 2D Sandbox (`lab/cosmos-lab.html`) remains a dependency-free experiment and accessible fallback; the observatory is the portfolio’s primary COSMOS experience.
 
 ## Data pipeline
 

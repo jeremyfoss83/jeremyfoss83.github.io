@@ -1,6 +1,6 @@
 # COSMOS real-data snapshot
 
-`cosmos-real-data.js` is a generated, browser-ready data snapshot for COSMOS LAB. It is a classic script rather than an ES module so it works when the portfolio is opened directly with a `file://` URL:
+`cosmos-real-data.js` is the generated, browser-ready data snapshot for the flagship COSMOS Observatory. It is a classic script rather than an ES module so the observatory works when the portfolio is opened directly with a `file://` URL:
 
 ```html
 <script src="assets/data/cosmos-real-data.js"></script>

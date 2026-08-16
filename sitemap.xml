@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://jeremyfoss83.github.io/</loc></url>
+  <url><loc>https://jeremyfoss83.github.io/</loc><priority>1.0</priority></url>
   <url><loc>https://jeremyfoss83.github.io/projects/brain-drain-model.html</loc></url>
   <url><loc>https://jeremyfoss83.github.io/projects/crypto-fraud-osint.html</loc></url>
   <url><loc>https://jeremyfoss83.github.io/projects/portfolio-database.html</loc></url>
   <url><loc>https://jeremyfoss83.github.io/projects/office-network.html</loc></url>
   <url><loc>https://jeremyfoss83.github.io/lab/signal-sweep.html</loc></url>
-  <url><loc>https://jeremyfoss83.github.io/lab/cosmos-lab.html</loc></url>
-  <url><loc>https://jeremyfoss83.github.io/lab/cosmos-observatory.html</loc></url>
+  <url><loc>https://jeremyfoss83.github.io/lab/cosmos-observatory.html</loc><priority>0.8</priority></url>
+  <url><loc>https://jeremyfoss83.github.io/lab/cosmos-lab.html</loc><priority>0.6</priority></url>
 </urlset>

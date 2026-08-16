@@ -3,11 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Jeremy Foss's interactive 3D solar-system observatory: explore locally propagated JPL reference states, compare models, and inspect orbital motion in the browser.">
+  <meta name="description" content="Jeremy Foss's interactive 3D astronomy observatory: explore JPL Solar System states, a TRAPPIST-1 catalog model, orbital geometry, and model comparisons.">
   <meta name="theme-color" content="#030711">
   <meta property="og:title" content="COSMOS Observatory | Jeremy Foss">
   <meta property="og:description" content="An interactive scientific visualization combining JPL reference data, local orbital propagation, 3D rendering, and accessible controls.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://jeremyfoss83.github.io/lab/cosmos-observatory.html">
   <meta property="og:image" content="https://jeremyfoss83.github.io/assets/images/social-preview.png">
+  <meta name="twitter:card" content="summary_large_image">
   <title>COSMOS Observatory | Jeremy Foss</title>
   <link rel="canonical" href="https://jeremyfoss83.github.io/lab/cosmos-observatory.html">
   <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml">
@@ -33,7 +36,7 @@
   <main>
     <section class="observatory" aria-labelledby="observatory-title">
       <div class="viewport" id="observatoryViewport">
-        <canvas id="observatoryCanvas" width="1920" height="1080" tabindex="0" role="img" aria-describedby="obsDomSummary" aria-keyshortcuts="Space ArrowLeft ArrowRight F O L V T C G BracketLeft BracketRight">Interactive three-dimensional solar-system view. Drag to orbit the camera, scroll or pinch to zoom, and select a body to inspect its state.</canvas>
+        <canvas id="observatoryCanvas" width="1920" height="1080" tabindex="0" role="img" aria-describedby="obsDomSummary" aria-keyshortcuts="Space ArrowLeft ArrowRight F O L V T C G BracketLeft BracketRight">Interactive three-dimensional planetary-system view. Drag to orbit the camera, scroll or pinch to zoom, and select a body to inspect its state.</canvas>
         <div class="space-vignette" aria-hidden="true"></div>
         <div class="reticle" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
 
@@ -120,7 +123,7 @@
         </section>
 
         <div class="fallback glass-panel" id="obsFallback" role="status" aria-live="polite">
-          <i aria-hidden="true"></i><span>Preparing orbital state and graphics context…</span>
+          <i aria-hidden="true"></i><span>Preparing orbital state and graphics context…</span><a href="cosmos-lab.html">Open the 2D Sandbox instead</a>
         </div>
 
         <section class="tour-overlay" id="obsTour" role="dialog" aria-modal="true" aria-labelledby="obsTourTitle" aria-describedby="obsTourCopy" tabindex="-1" hidden>
@@ -178,7 +181,7 @@
   </main>
 
   <footer><div class="content-wrap footer-inner"><span>© 2026 Jeremy Foss</span><span>JPL-sourced reference data · Local model · Canvas/WebGL · AI-assisted</span></div></footer>
-  <noscript><p class="noscript">COSMOS Observatory requires JavaScript for the interactive model. The methodology and source documentation remain available below.</p></noscript>
+  <noscript><p class="noscript">COSMOS Observatory requires JavaScript for the interactive model. You can still <a href="../docs/COSMOS-OBSERVATORY-ARCHITECTURE.md">read the architecture and methodology</a> or <a href="../index.html#cosmos">return to the portfolio</a>.</p></noscript>
   <script src="../assets/data/cosmos-real-data.js"></script>
   <script src="../assets/js/cosmos-observatory.js"></script>
 </body>

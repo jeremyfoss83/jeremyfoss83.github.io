@@ -14,8 +14,8 @@ Personal portfolio for Jeremy Foss, a University of South Florida Information Sc
 - Open Graph, structured-data, sitemap, and search metadata
 - A custom favicon and social sharing image
 - An original responsive 2D canvas game with keyboard and touch controls
-- COSMOS LAB: a procedural starfield and interactive orbital-physics visualization
-- COSMOS OBSERVATORY: a progressively enhanced 3D astronomy data experience using curated JPL Horizons and NASA Exoplanet Archive reference data
+- COSMOS OBSERVATORY: the flagship 3D astronomy data experience, using curated JPL Horizons and NASA Exoplanet Archive reference data
+- COSMOS 2D SANDBOX: a dependency-free companion experiment with a procedural starfield and interactive orbital physics
 
 ## Project structure
 
@@ -30,8 +30,8 @@ Personal portfolio for Jeremy Foss, a University of South Florida Information Sc
 │   └── office-network.html
 ├── lab/
 │   ├── signal-sweep.html
-│   ├── cosmos-lab.html
-│   └── cosmos-observatory.html
+│   ├── cosmos-observatory.html
+│   └── cosmos-lab.html
 ├── assets/
 │   ├── css/
 │   ├── data/
@@ -50,7 +50,7 @@ Personal portfolio for Jeremy Foss, a University of South Florida Information Sc
 
 ## Development notes
 
-Most of the site uses semantic HTML, CSS, and dependency-free JavaScript. The optional 3D observatory is bundled from a documented ES module source with pinned Three.js and esbuild versions; the committed browser bundle still deploys directly through GitHub Pages.
+Most of the site uses semantic HTML, CSS, and dependency-free JavaScript. The flagship 3D observatory is bundled from a documented ES module source with pinned Three.js and esbuild versions; the committed browser bundle still deploys directly through GitHub Pages. Its companion 2D sandbox remains dependency-free and available when a lighter-weight experiment is preferred.
 
 ```powershell
 npm install
