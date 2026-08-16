@@ -14,6 +14,7 @@ Personal portfolio for Jeremy Foss, a University of South Florida Information Sc
 - Open Graph, structured-data, sitemap, and search metadata
 - A custom favicon and social sharing image
 - An original responsive 2D canvas game with keyboard and touch controls
+- COSMOS LAB: a procedural starfield and interactive orbital-physics visualization
 
 ## Project structure
 
@@ -27,7 +28,8 @@ Personal portfolio for Jeremy Foss, a University of South Florida Information Sc
 │   ├── portfolio-database.html
 │   └── office-network.html
 ├── lab/
-│   └── signal-sweep.html
+│   ├── signal-sweep.html
+│   └── cosmos-lab.html
 ├── assets/
 │   ├── css/
 │   ├── images/

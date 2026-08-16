@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Explore Orbital Resonance, Jeremy Foss's interactive browser laboratory for orbital motion, procedural starfields, gravity vectors, and harmonic trails.">
+  <meta name="theme-color" content="#050914">
+  <meta property="og:title" content="COSMOS LAB | Jeremy Foss">
+  <meta property="og:description" content="A controllable orbital system and infinite procedural starfield built with Canvas and vanilla JavaScript.">
+  <meta property="og:image" content="https://jeremyfoss83.github.io/assets/images/social-preview.png">
+  <title>COSMOS LAB | Jeremy Foss</title>
+  <link rel="canonical" href="https://jeremyfoss83.github.io/lab/cosmos-lab.html">
+  <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/cosmos.css">
+</head>
+<body>
+  <a class="skip" href="#simulation">Skip to simulation</a>
+  <nav>
+    <div class="wrap nav-inner">
+      <a class="brand" href="../index.html#cosmos"><span>JF /</span> COSMOS LAB</a>
+      <div class="nav-meta" aria-hidden="true"><i></i> SIMULATION ONLINE</div>
+      <a class="back" href="../index.html#cosmos">← PORTFOLIO</a>
+    </div>
+  </nav>
+
+  <main>
+    <header class="wrap hero">
+      <div class="hero-copy">
+        <div class="eyebrow">Interactive physics visualization · Experiment 02</div>
+        <h1><span>COSMOS</span><br>LAB</h1>
+        <p class="lead">Space invites us to explore the unknown, discover what the universe still hides, and ask what our existence within it really means.</p>
+      </div>
+      <aside class="hero-note">
+        <span class="kicker">Orbital Resonance / 01</span>
+        <p>Navigate an effectively infinite starfield, alter time, inspect motion, and turn orbital relationships into living geometry.</p>
+        <div class="hero-directions"><span>Scroll to zoom</span><span>Drag to navigate</span><span>Select a body</span></div>
+      </aside>
+    </header>
+
+    <section class="wrap observatory" id="simulation" aria-labelledby="simulation-title">
+      <div class="observatory-head">
+        <div><span class="section-number">01</span><h2 id="simulation-title">Orbital Resonance</h2></div>
+        <p>Scaled two-dimensional dynamics, rendered live in your browser.</p>
+      </div>
+
+      <div class="instrument">
+        <div class="telemetry" aria-label="Simulation telemetry">
+          <div><span>State</span><strong id="cosmosStatus" aria-live="polite">INITIALIZING</strong></div>
+          <div><span>Bodies</span><strong id="cosmosBodyCount">—</strong></div>
+          <div><span>Time scale</span><strong id="cosmosTimeValue">1.00×</strong></div>
+          <div><span>Zoom</span><strong id="cosmosZoomValue">100%</strong></div>
+          <div><span>Energy drift</span><strong id="cosmosEnergyDrift">—</strong></div>
+          <div><span>Angular drift</span><strong id="cosmosMomentumDrift">—</strong></div>
+        </div>
+
+        <div class="viewport" id="cosmosViewport">
+          <canvas id="cosmosCanvas" width="1600" height="900" tabindex="0" role="img" aria-label="Interactive orbital simulation. Drag or use WASD to pan, scroll or use plus and minus to zoom, and use brackets to select orbiting bodies for details." aria-describedby="cosmosCanvasHelp inspector-title">Your browser does not support the canvas element.</canvas>
+          <div class="viewport-frame" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+          <div class="viewport-label top-left" aria-hidden="true">DEEP FIELD / LIVE</div>
+          <div class="viewport-label top-right" aria-hidden="true">2D REFERENCE PLANE</div>
+          <div class="canvas-help" id="cosmosCanvasHelp"><span class="mouse-icon" aria-hidden="true"></span><span>Drag to pan · Wheel / pinch to zoom · Click to inspect</span><span class="keyboard-help">Keyboard: WASD · +/− · Space · [ ] select</span></div>
+        </div>
+
+        <div class="command-deck">
+          <fieldset class="control-group time-controls">
+            <legend>Time control</legend>
+            <div class="button-row">
+              <button type="button" data-cosmos-action="slower" aria-label="Decrease simulation speed">−</button>
+              <button type="button" class="control-primary" data-cosmos-action="pause" aria-pressed="false">Pause</button>
+              <button type="button" data-cosmos-action="faster" aria-label="Increase simulation speed">+</button>
+              <button type="button" data-cosmos-action="step" aria-label="Advance one fixed simulation step">Step</button>
+              <button type="button" data-cosmos-action="reverse" aria-pressed="false">Reverse</button>
+            </div>
+            <div class="speed-presets" aria-label="Time scale presets">
+              <button type="button" data-cosmos-speed="0.25" aria-pressed="false">0.25×</button>
+              <button type="button" data-cosmos-speed="1" class="active" aria-pressed="true">1×</button>
+              <button type="button" data-cosmos-speed="4" aria-pressed="false">4×</button>
+              <button type="button" data-cosmos-speed="16" aria-pressed="false">16×</button>
+            </div>
+          </fieldset>
+
+          <fieldset class="control-group layers">
+            <legend>Instrument layers</legend>
+            <label><span>Gravity field</span><input id="cosmosGravityToggle" type="checkbox"><i></i></label>
+            <label><span>Velocity vectors</span><input id="cosmosVelocityToggle" type="checkbox"><i></i></label>
+            <label><span>Orbital trails</span><input id="cosmosTrailsToggle" type="checkbox" checked><i></i></label>
+          </fieldset>
+
+          <fieldset class="control-group system-controls">
+            <legend>System</legend>
+            <button type="button" class="resonance" data-cosmos-action="resonance" aria-pressed="false"><span>∞</span> Resonance mode</button>
+            <div class="button-row compact">
+              <button type="button" data-cosmos-action="reset-view">Center view</button>
+              <button type="button" data-cosmos-action="reset-system">Reset system</button>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+
+      <div class="lower-deck">
+        <aside class="inspector" aria-labelledby="inspector-title">
+          <div class="panel-title"><span>Selected object</span><strong id="inspector-title">Telemetry inspector</strong></div>
+          <div class="object-name"><i id="cosmosObjectMarker" aria-hidden="true"></i><div><span id="cosmosSelectedType">CENTRAL STAR</span><h3 id="cosmosSelectedName">Asterion</h3></div><div class="object-nav" aria-label="Choose an object to inspect"><button type="button" data-cosmos-action="previous-body" aria-label="Inspect previous body">←</button><button type="button" data-cosmos-action="next-body" aria-label="Inspect next body">→</button></div></div>
+          <dl>
+            <div><dt>Mass</dt><dd id="cosmosSelectedMass">—</dd></div>
+            <div><dt>Distance from star</dt><dd id="cosmosSelectedDistance">—</dd></div>
+            <div><dt>Velocity</dt><dd id="cosmosSelectedVelocity">—</dd></div>
+            <div><dt>Kepler period estimate</dt><dd id="cosmosSelectedPeriod">—</dd></div>
+          </dl>
+        </aside>
+
+        <form class="constructor" id="cosmosAddForm">
+          <div class="panel-title"><span>Object constructor</span><strong>Introduce a new body</strong></div>
+          <div class="form-grid">
+            <label>Name<input id="cosmosBodyName" name="name" type="text" value="Kepler" maxlength="18" autocomplete="off"></label>
+            <label>Mass <small>(Earths)</small><input id="cosmosBodyMass" name="mass" type="number" value="1" min="0.1" max="50" step="0.1"></label>
+            <label>Distance <small>(scaled AU)</small><input id="cosmosBodyDistance" name="distance" type="number" value="2.8" min="0.6" max="8" step="0.1"></label>
+            <label>Velocity <small>(circular ratio)</small><input id="cosmosBodySpeed" name="speed" type="number" value="1" min="0.3" max="1.7" step="0.05"></label>
+          </div>
+          <button class="launch" type="submit" data-cosmos-action="add-body"><span>+</span> Launch body</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="wrap resonance-story" aria-labelledby="resonance-title">
+      <div class="story-mark" aria-hidden="true">∞</div>
+      <div><div class="eyebrow">02 / Mathematical lens</div><h2 id="resonance-title">When motion becomes geometry.</h2></div>
+      <p>Resonance mode preserves orbital trails and emphasizes bodies whose periods approach simple ratios. Repeated motion accumulates into rosettes, braids, and near-infinite loops—making an abstract relationship visible.</p>
+    </section>
+
+    <section class="wrap technical" aria-labelledby="technical-title">
+      <div class="technical-head"><div class="eyebrow">03 / Under the instrument</div><h2 id="technical-title">A visual model with explicit assumptions.</h2><p>This is a front-end systems and data-visualization experiment informed by orbital mechanics—not aerospace engineering analysis or a mission-design tool.</p></div>
+      <div class="technical-grid">
+        <article><span>01</span><h3>Force model</h3><p>Every body accelerates every other body through a softened Newtonian inverse-square relationship.</p><div class="equation">aᵢ = G Σ mⱼ(rⱼ−rᵢ) / (‖rⱼ−rᵢ‖²+ε²)<sup>3/2</sup></div></article>
+        <article><span>02</span><h3>Numerical model</h3><p>A fixed-step velocity-Verlet integrator advances position and velocity independently of display refresh. Scaled units and softening favor stable, legible interaction over scientific precision.</p></article>
+        <article><span>03</span><h3>Resonance</h3><p>Period ratios and persistent paths reveal repeating phase relationships. The geometry is an interpretive layer over the same simulation state.</p></article>
+        <article><span>04</span><h3>Procedural depth</h3><p>Seeded star tiles are generated around the camera as it moves, then recycled outside the view. The field feels unbounded without storing an infinite scene.</p></article>
+        <article><span>05</span><h3>Limits</h3><p>The model is planar; radii and vectors are visually exaggerated; collisions, relativity, tides, and three-dimensional inclination are omitted. Telemetry is diagnostic—not a claim of physical validation.</p></article>
+        <article><span>06</span><h3>Performance & access</h3><p>Canvas rendering is resolution-aware, controls remain available in semantic HTML, live state is announced, and reduced-motion preferences are respected.</p></article>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="wrap footer-inner"><span>© 2026 Jeremy Foss</span><span>Canvas · Vector math · Vanilla JavaScript · AI-assisted</span></div></footer>
+  <noscript><p class="noscript">COSMOS LAB requires JavaScript to run the interactive simulation.</p></noscript>
+  <script src="../assets/js/cosmos-lab.js"></script>
+</body>
+</html>
