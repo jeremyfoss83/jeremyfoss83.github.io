@@ -5,7 +5,8 @@
   "description": "Recruiter portfolio and interactive browser laboratories.",
   "scripts": {
     "build:observatory": "esbuild assets/js/cosmos-observatory.source.js --bundle --format=iife --platform=browser --target=es2020 --minify --outfile=assets/js/cosmos-observatory.js",
-    "qa": "node qa.mjs"
+    "qa": "node qa.mjs",
+    "dev": "node tools/dev-server.mjs"
   },
   "devDependencies": {
     "esbuild": "0.28.2",

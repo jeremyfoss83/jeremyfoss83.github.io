@@ -62,3 +62,14 @@ npm run qa
 The astronomy dataset is a versioned local snapshot so the experience remains deterministic and reviewable. Its provenance, retrieval queries, units, reference frame, missing values, and modeling boundaries are documented under `assets/data/`.
 
 The implementation and copy were developed with AI assistance under Jeremy's direction. Project claims were reconciled against a verified career evidence bank and intentionally preserve stated evidence boundaries.
+
+## September 2026 update
+
+The recruiter homepage now includes six projects, category filters, a mobile menu,
+current Home Depot experience, a concise introduction, and `resume.html` with print
+styles. New case studies cover the R air-quality coursework and the AI-assisted
+Life OS prototype. The three interactive labs are preserved. COSMOS now gives a
+clear, accessible route to the 2D sandbox when WebGL is unavailable.
+
+Local preview: `npm run dev -- --host 0.0.0.0 --port 4173`.
+See `design-qa.md` for the review scope and the WebGL/native-print test limitations.

@@ -36,7 +36,15 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
     heading.textContent = title;
     const copy = document.createElement('span');
     copy.textContent = detail;
-    panel.append(heading, copy);
+    const link = document.createElement('a');
+    link.href = 'cosmos-lab.html';
+    link.textContent = 'Explore the 2D orbital sandbox';
+    link.style.cssText = 'display:inline-block;justify-self:center;margin-top:1rem;padding:.8rem 1rem;border:1px solid #6ee7d8;border-radius:8px;color:#6ee7d8;text-underline-offset:4px';
+    panel.append(heading, copy, link);
+    if (els.obsFallback) els.obsFallback.hidden = true;
+    if (els.obsDomSummary) els.obsDomSummary.textContent = title + ' ' + detail + ' The 2D orbital sandbox is available.';
+    viewport.querySelectorAll('button, input, select').forEach(control => { control.disabled = true; });
+    if (els.obsBodyList) els.obsBodyList.textContent = 'The 3D catalog requires WebGL. Explore the 2D sandbox instead.';
     viewport.append(panel);
     if (els.obsStatus) els.obsStatus.textContent = 'UNAVAILABLE';
   }
